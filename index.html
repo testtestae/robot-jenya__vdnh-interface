@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="./src/lib/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <style>
         body{
             margin: 0;
@@ -47,9 +47,9 @@
     <div id="app"></div>
 
 
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script crossorigin src="./src/lib/js/react.production.min.js"></script>
+    <script crossorigin src="./src/lib/js/react-dom.production.min.js"></script>
+    <script src="./src/lib/js/babel.min.js"></script>
 
     <script>
         let voices = window.speechSynthesis.getVoices();
@@ -60,7 +60,7 @@
             let speech = new SpeechSynthesisUtterance();
             speech.rate = 0.75;
             let voices = window.speechSynthesis.getVoices().filter(e => e.lang==="ru-RU")
-            speech.voice = voices[0];
+            speech.voice = voices[2];
             speech.text = "";
 
             let receiveAndSpeech = (whatSay)=>{
@@ -101,7 +101,7 @@
                 <header style={{display: "flex", justifyContent: "center"}}>
                     <div class="boundingContainer">
                         <div class="logo">
-                            <img style={{margin: ".5em", maxHeight: "5em"}} src="https://ikar65.ru/wp-content/uploads/2017/11/ikarlogo.png" alt="logo" />
+                            <img style={{margin: ".5em", maxHeight: "5em"}} src="./src/img/ikarlogo.png" alt="logo" />
                         </div>
                     </div>
                 </header>
@@ -151,9 +151,9 @@
         </>
      );
    </script>
-   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   <script src="./src/lib/js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   <script src="./src/lib/js/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+   <script src="./src/lib/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>
