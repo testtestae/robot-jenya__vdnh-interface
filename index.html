@@ -51,23 +51,48 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+    <script>
+        let voices = window.speechSynthesis.getVoices();
+    </script>
+
     <script type="text/babel">
+        let voiceGenerateCore = ()=>{
+            let speech = new SpeechSynthesisUtterance();
+            speech.rate = 0.75;
+            let voices = window.speechSynthesis.getVoices().filter(e => e.lang==="ru-RU")
+            speech.voice = voices[0];
+            speech.text = "";
+
+            let receiveAndSpeech = (whatSay)=>{
+                speech.text = whatSay;
+                window.speechSynthesis.speak(speech);
+            }
+
+            let stopSpeech = ()=>{
+                window.speechSynthesis.cancel();
+            }
+
+            return {receiveAndSpeech, stopSpeech};
+        }
+
+        let say = voiceGenerateCore();
+
         let generateData = [
            {
                "label": "Обо мне",
-               "payloadText": "lorem"
+               "payloadText": "Тестовый текст для проверки работоспособности системы"
            }
            ,{
                "label": "О проекте",
-               "payloadText": "lorem"
+               "payloadText": "Тестовый текст для проверки работоспособности системы"
            }
            ,{
                "label": "Об ИКаР",
-               "payloadText": "lorem"
+               "payloadText": "Тестовый текст для проверки работоспособности системы"
            }
            ,{
                "label": "О выставке",
-               "payloadText": "lorem"
+               "payloadText": "Тестовый текст для проверки работоспособности системы"
            }
        ]
 
@@ -89,8 +114,14 @@
                 // return <button className="btn btn-primary">{e.label}</button>
                 return(
                     <>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        {e.label}
+                        <button 
+                            type="button" 
+                            class="btn btn-primary" 
+                            data-toggle="modal" 
+                            data-target="#exampleModal"
+                            onClick = {()=>{say.receiveAndSpeech(e.payloadText)}}
+                        >
+                            {e.label}
                         </button>
 
 
