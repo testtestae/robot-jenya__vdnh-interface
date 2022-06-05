@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="./src/lib/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="./src/lib/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body{
             margin: 0;
@@ -50,17 +50,17 @@
     <script crossorigin src="./src/lib/js/react.production.min.js"></script>
     <script crossorigin src="./src/lib/js/react-dom.production.min.js"></script>
     <script src="./src/lib/js/babel.min.js"></script>
+    <script src="./src/lib/js/socket.io.min.js" ></script>
 
     <script>
         let voices = window.speechSynthesis.getVoices();
-    </script>
+        const socket = io.connect(`https://an-e.ru`);
 
-    <script type="text/babel">
         let voiceGenerateCore = ()=>{
             let speech = new SpeechSynthesisUtterance();
             speech.rate = 0.75;
             let voices = window.speechSynthesis.getVoices().filter(e => e.lang==="ru-RU")
-            speech.voice = voices[2];
+            speech.voice = voices[0];
             speech.text = "";
 
             let receiveAndSpeech = (whatSay)=>{
@@ -76,6 +76,17 @@
         }
 
         let say = voiceGenerateCore();
+
+        // useEffect(()=>{
+        //     console.log("hi");
+        //     socket.on("jenyaSaid", (msg)=>{
+        //         say.receiveAndSpeech(msg);
+                
+        //     });
+        // })
+    </script>
+
+    <script type="text/babel">
 
         let generateData = [
            {
@@ -150,6 +161,14 @@
             <BtnsList />
         </>
      );
+   </script>
+   <script>
+       socket.on('jenyaSaid', function (data) {
+            say.receiveAndSpeech(data)
+        });
+        socket.on('jenyaFellSilent', function () {
+            say.stopSpeech()
+        });
    </script>
    <script src="./src/lib/js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
    <script src="./src/lib/js/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
