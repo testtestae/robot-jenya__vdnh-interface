@@ -55,12 +55,15 @@
     <script>
         let voices = window.speechSynthesis.getVoices();
         const socket = io.connect(`https://an-e.ru`);
+    </script>
 
-        let voiceGenerateCore = ()=>{
+    <script type="text/babel">
+
+		let voiceGenerateCore = ()=>{
             let speech = new SpeechSynthesisUtterance();
             speech.rate = 0.75;
             let voices = window.speechSynthesis.getVoices().filter(e => e.lang==="ru-RU")
-            speech.voice = voices[0];
+            speech.voice = voices[2];
             speech.text = "";
 
             let receiveAndSpeech = (whatSay)=>{
@@ -76,17 +79,6 @@
         }
 
         let say = voiceGenerateCore();
-
-        // useEffect(()=>{
-        //     console.log("hi");
-        //     socket.on("jenyaSaid", (msg)=>{
-        //         say.receiveAndSpeech(msg);
-                
-        //     });
-        // })
-    </script>
-
-    <script type="text/babel">
 
         let generateData = [
            {
@@ -170,9 +162,9 @@
             say.stopSpeech()
         });
    </script>
-   <script src="./src/lib/js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-   <script src="./src/lib/js/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-   <script src="./src/lib/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   <script src="./src/lib/js/jquery-3.2.1.slim.min.js" ></script>
+   <script src="./src/lib/js/popper.min.js" ></script>
+   <script src="./src/lib/js/bootstrap.min.js"></script>
 </body>
 
 </html>
