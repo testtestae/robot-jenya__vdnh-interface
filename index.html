@@ -63,7 +63,7 @@
             let speech = new SpeechSynthesisUtterance();
             speech.rate = 0.75;
             let voices = window.speechSynthesis.getVoices().filter(e => e.lang==="ru-RU")
-            speech.voice = voices[2];
+            speech.voice = voices[0];
             speech.text = "";
 
             let receiveAndSpeech = (whatSay)=>{
