@@ -8,47 +8,121 @@
     <title>Document</title>
     <link href="./src/lib/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body{
-            margin: 0;
-            height: 100vh;
+        @font-face {
+            font-family: HelveticaNeue;
+            font-weight: regular;
+            src: url("./src/fonts/Balsamiq_Sans/BalsamiqSans-Regular.ttf");
         }
-        #app{
-            height: 100%;
-        }
-        header{
-            margin-bottom: 2.5em;
-        }
-
         
-        .BtnsList{
-            /* height: 100%; */
+        body{
+            height: 100vh;
+            margin: 0;
+
+            background-color: #C5C2DE;
+            color: #ffffff;
+
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
+
+            flex-direction: column;
+
+            /* font-family: 'Balsamiq Sans', cursive; */
+            /* font-family: 'Roboto', sans-serif; */
+            font-family: 'HelveticaNeue', regular;
+        }
+
+        .elem{
+            height: 7em;
+            width: 100%;
+            max-width: 720px;
+            
+            margin: 2em 5em;
+            border-radius: .5em;
+
+            text-align: center;
+            vertical-align:baseline;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .first-bgcolor{
+            background-color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+            height: 12em;
+        }
+
+        .btns{
+            width: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            flex-direction: column;
+        }
+        .elem > img {
+            height: 7em;
+        }
+        .elem > span {
+            font-size: 3.5em;
+        }
+        .second-bgcolor{
+            background-color: #122588;
+        }
+
+        .my-modal{
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+
             font-size: 3rem;
+
+            background-color: #1225881f;
+            color: #101010;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .BtnsList .modal-body{
-            font-size: .75em;
-        }
-        .BtnsList > * {
-            margin: .5em;
-            font-size: inherit;
-        }
-        .boundingContainer{
+        .my-modal__payload{
+            background-color: #fff;
+
             width: 100%;
             max-width: 920px;
+            margin: 2rem;
+
+            border-radius: 1.5rem;
+        }
+        .my-modal__payload > header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 1.5rem 2.5rem;
+
+            border-bottom: .0625rem solid #101010;
+        }
+        .my-modal__payload > header > h3, .my-modal__payload > header > h2 {
+            margin: 0;
+        }
+        .my-modal__payload > main {
+            padding: .5em;
         }
     </style>
 </head>
 
 <body>
-
     <div id="app"></div>
 
-
-    <script crossorigin src="./src/lib/js/react.production.min.js"></script>
-    <script crossorigin src="./src/lib/js/react-dom.production.min.js"></script>
+    <!-- <script crossorigin src="./src/lib/js/react.production.min.js"></script>
+    <script crossorigin src="./src/lib/js/react-dom.production.min.js"></script> -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="./src/lib/js/babel.min.js"></script>
     <script src="./src/lib/js/socket.io.min.js" ></script>
 
@@ -57,102 +131,137 @@
         const socket = io.connect(`https://an-e.ru`);
     </script>
 
-    <script type="text/babel">
-
-		let voiceGenerateCore = ()=>{
+    <script type="text/babel" crossorigin >
+        
+        let voiceGenerateCore = ()=>{
             let speech = new SpeechSynthesisUtterance();
-            speech.rate = 0.75;
+            speech.rate = 0.85;
             let voices = window.speechSynthesis.getVoices().filter(e => e.lang==="ru-RU")
             speech.voice = voices[0];
             speech.text = "";
-
+            
             let receiveAndSpeech = (whatSay)=>{
                 speech.text = whatSay;
                 window.speechSynthesis.speak(speech);
             }
-
+            
             let stopSpeech = ()=>{
                 window.speechSynthesis.cancel();
             }
-
+            
             return {receiveAndSpeech, stopSpeech};
         }
-
+        
         let say = voiceGenerateCore();
-
+        
         let generateData = [
-           {
-               "label": "Обо мне",
-               "payloadText": "Тестовый текст для проверки работоспособности системы"
-           }
-           ,{
-               "label": "О проекте",
-               "payloadText": "Тестовый текст для проверки работоспособности системы"
-           }
-           ,{
-               "label": "Об ИКаР",
-               "payloadText": "Тестовый текст для проверки работоспособности системы"
-           }
-           ,{
-               "label": "О выставке",
-               "payloadText": "Тестовый текст для проверки работоспособности системы"
-           }
-       ]
-
+            {
+                "label": "Обо мне",
+                "payloadText": `
+                Привет, меня зовут Женя, я робот-помощник и друг. 
+                Помогаю ребятам, которые попали в трудную жизненную ситуацию, связаться с детским омбудсменом Челябинской области Евгенией Майоровой и получить поддержку. В прошлом году я помогла тысяче ребят.
+                Мальчишки и девчонки общаются со мной через сенсорный экран, читают полезную информацию и, самое главное, без помощи взрослых оставляют свои обращения детскому омбудсмену.
+                `
+            }
+            ,{
+                "label": "О проекте",
+                "payloadText": `
+                Чтобы появилась я, ребятам из челябинского детского технопарка «Кванториум» пришлось решить взрослые инженерные задачи:
+                Сначала они продумали дизайн и сделали эскиз;
+                Потом – корпус: создали Три-Д модель, вырезали её на лазерном станке, аккуратно собрали, обклеили стекловолокном и окрасили;
+                Параллельно работали над моей умной головой. Создавали программную начинку, чтобы я даже дистанционно могла общаться с детьми, получать их заявки, а они – читать полезную информацию и узнавать о своих правах.
+                Чтобы ребята меня не боялись, я научилась проявлять эмоции: улыбаться, выглядеть счастливой и дружелюбной. Для этого на моей голове установили планшет, он отображает мою мимику, а ещё сделали причёску – хвостик, с ней я превратилась в полезную красавицу. 
+                `
+            }
+            ,{
+                "label": "Об ИКаР",
+                "payloadText": `
+                Инженер – звучит гордо! А быть инженером – круто! ИКаРята знают это с детства. Потому что участвуют в уникальных соревнованиях ИКаР, которые повышают уровень и престиж инженерных кадров России. Учат мыслить логически, системно и креативно.
+                Ребята знакомятся с предприятиями, воссоздают линии производства и даже  помогают решать реальные производственные кейсы.
+                Среди участников - дети от 3-х до 17 лет. В том числе с ограниченными возможностями здоровья. 
+                Ресурсные центры ИКаР расположены по всей стране. Здесь могут получить поддержку образовательные организации и предприятия, которые заинтересованы в ранней подготовке инженерных кадров для нашей страны. 
+                `
+            }
+            ,{
+                "label": "О выставке",
+                "payloadText": `
+                Сегодня на Робостанции вы можете увидеть 17 необычных проектов. От автоматизированных производственных линий и умной сигнализации, до мобильных приложений и медицинских ноу-хау. Все они ждут вас!
+                Например, ребята из Челябинского детского технопарка «Кванториум» привезли на ВДНХ не только меня, а еще робота-патруля, беспилотник «Долголёт», устройство для реабилитации пальцев кисти человеческой руки. 
+                Юные инженеры из Московской области готовы показать мультиконвейер для сборки компьютеров, а команда  из республики Коми – упаковочный станок для пиломатериалов . 
+                Ну и конечно любители технологий виртуальной реальности оценят мобильное приложение команды, которая приехала в столицу из Кемеровской области. 
+                Не буду рассказывать про все проекты, сами все увидите. Приятной экскурсии!
+                `
+            }
+        ]
+        
         let MyHeader = ()=>{
             return(
-                <header style={{display: "flex", justifyContent: "center"}}>
-                    <div class="boundingContainer">
-                        <div class="logo">
-                            <img style={{margin: ".5em", maxHeight: "5em"}} src="./src/img/ikarlogo.png" alt="logo" />
-                        </div>
-                    </div>
-                </header>
+                <div class="elem first-bgcolor">
+                    <img src="./src/img/ikarlogo.png" alt="logo" />
+                </div>
             )
         }
 
-       let BtnsList = (params) => {
-           return(<div className="BtnsList">
-            {generateData.map((e, id)=>{
-                // return <button className="btn btn-primary">{e.label}</button>
-                return(
-                    <>
-                        <button 
-                            type="button" 
-                            class="btn btn-primary" 
-                            data-toggle="modal" 
-                            data-target="#exampleModal"
-                            onClick = {()=>{say.receiveAndSpeech(e.payloadText)}}
+       let BtnsList = (props) => {
+           return(
+                <div className="btns" >
+                    {generateData.map((e, id) => {
+                        return(
+                            <div 
+                                className="elem second-bgcolor"
+                                onClick={()=>{props.setModal(e)}}
+                            >
+                                
+                                <span>{e.label}</span>
+                            </div>
+                        )
+                    })}
+                </div>
+            )
+        }
+
+        let MyModal = (props)=>{
+            return(
+                <div 
+                    class="my-modal close-my-modal"
+                    onClick={()=>{props.setModal(false)}}
+                >
+                    <div class="my-modal__payload">
+                        <header 
+                            // onClick="event.stopPropagation()"
                         >
-                            {e.label}
-                        </button>
+                            <h3
+                                // onClick="event.stopPropagation()"
+                            >{props.modal.label}</h3>
+                            <h2 
+                                class="close-my-modal"
+                                onClick={()=>{props.setModal(false)}}
+                            >X</h2>
+                        </header>
+                        <main onclick="event.stopPropagation()">
+                            {props.modal.payloadText}
+                        </main>
+                    </div>
+                </div>
+            )
+        }
 
-
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                            <div class="modal-body">
-                                {e.payloadText}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                    </>
-                )
-            })}
-           </div>)
-       }
+        let App = ()=>{
+            const [modal, setModal] = React.useState(false);
+            React.useEffect(()=>{
+                modal?say.receiveAndSpeech(modal.payloadText):say.stopSpeech()
+            },[modal])
+            return(<>
+                <MyHeader />
+                <BtnsList setModal={setModal}/>
+                {modal?<MyModal modal={modal} setModal={setModal}/>:null}
+            </>)
+        }
     const rootNode = document.getElementById("app");
     const root = ReactDOM.createRoot(rootNode);
     root.render(
-        <>
-            <MyHeader />
-            <BtnsList />
-        </>
-     );
+        <App/>
+    );
    </script>
    <script>
        socket.on('jenyaSaid', function (data) {
